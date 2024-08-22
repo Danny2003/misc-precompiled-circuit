@@ -12,7 +12,6 @@ pub fn field_to_bn<F: PrimeField>(f: &F) -> BigUint {
 
 pub fn bn_to_field<F: FromUniformBytes<64>>(bn: &BigUint) -> F {
     let mut bytes = bn.to_bytes_le();
-    bytes.resize(64, 0);
     F::from_uniform_bytes(&bytes.try_into().unwrap())
 }
 

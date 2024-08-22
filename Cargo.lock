@@ -230,7 +230,7 @@ dependencies = [
 [[package]]
 name = "halo2-gate-generator"
 version = "0.1.0"
-source = "git+https://github.com/scroll-tech/halo2gategen#8ccf462e1eff4ed0e602d7ba19771b2c53dee0e3"
+source = "git+https://github.com/scroll-tech/halo2gategen?branch=scroll#2fa5c39aa67d0f97d660f37954daa9e897d0a4c1"
 dependencies = [
  "halo2_proofs",
  "lazy_static",
@@ -245,8 +245,8 @@ dependencies = [
 
 [[package]]
 name = "halo2_proofs"
-version = "0.2.0"
-source = "git+https://github.com/scroll-tech/halo2.git?branch=v1.0#44dbed4515984bbc14cb8283e273794b03c28afa"
+version = "1.1.0"
+source = "git+https://github.com/scroll-tech/halo2.git?branch=v1.1#e5ddf67e5ae16be38d6368ed355c7c41906272ab"
 dependencies = [
  "ark-std",
  "blake2b_simd",
@@ -256,9 +256,11 @@ dependencies = [
  "group",
  "halo2curves",
  "log",
+ "maybe-rayon",
  "num-bigint",
  "num-integer",
  "poseidon",
+ "rand_chacha",
  "rand_core",
  "rayon",
  "sha3",
@@ -329,6 +331,16 @@ name = "log"
 version = "0.4.20"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b5e6163cb8c49088c2c36f57875e58ccd8c87c7427f7fbd50ea6710b2f3f2e8f"
+
+[[package]]
+name = "maybe-rayon"
+version = "0.1.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8ea1f30cedd69f0a2954655f7188c6a834246d2bcf1e315e2ac40c4b24dc9519"
+dependencies = [
+ "cfg-if 1.0.0",
+ "rayon",
+]
 
 [[package]]
 name = "memoffset"
