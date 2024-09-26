@@ -870,6 +870,7 @@ impl<F: PrimeField> RMD160Chip<F> {
         Ok([anew, bnew, cnew, dnew, enew])
     }
 
+    #[flux::trusted] // zk-bug-finder modified
     pub fn assign_content(
         &self,
         layouter: &mut impl Layouter<F>,
