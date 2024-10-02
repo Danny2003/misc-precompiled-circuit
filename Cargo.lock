@@ -190,6 +190,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "flux-attrs"
+version = "0.1.0"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.39",
+]
+
+[[package]]
+name = "flux-rs"
+version = "0.1.0"
+dependencies = [
+ "flux-attrs",
+]
+
+[[package]]
 name = "funty"
 version = "2.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -355,6 +371,7 @@ dependencies = [
 name = "misc-precompiled-circuit"
 version = "0.1.0"
 dependencies = [
+ "flux-rs",
  "halo2-gate-generator",
  "halo2_proofs",
  "num-bigint",
