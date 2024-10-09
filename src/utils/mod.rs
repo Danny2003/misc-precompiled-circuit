@@ -149,7 +149,7 @@ impl TestVec {
 
 #[extern_spec]
 impl TestTryInto for TestVec {
-    #[flux::sig(fn ({TestVec[@n] | n >= 64}) -> TestResult)]
+    #[flux::sig(fn ({TestVec[@n] | n <= 64}) -> TestResult)]
     fn try_into(s: TestVec) -> TestResult;
 }
 
