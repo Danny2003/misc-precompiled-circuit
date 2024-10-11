@@ -78,6 +78,7 @@ pub trait PrimeField: Field + From<u64> {
 pub(crate) type BigDigit = u64;
 
 /// A big unsigned integer type.
+#[flux::refined_by(len: int)]
 struct BigUint {
     data: Vec<BigDigit>,
 }
@@ -88,22 +89,28 @@ trait FromUniformBytes<const N: usize>: PrimeField {
     fn from_uniform_bytes(bytes: &[u8; N]) -> Self;
 }
 
-#[derive(Debug)]
+#[flux::refined_by(len: int)]
 struct TestVec {
     data: Vec<u8>,
 }
 
 impl TestVec {
+    #[flux::trusted]
+    #[flux::sig(fn (&TestVec[@n]) -> usize[n])]
     fn len(&self) -> usize {
         unimplemented!()
     }
 }
 
 impl BigUint {
+    #[flux::trusted]
+    #[flux::sig(fn (&BigUint[@n]) -> usize[n])]
     fn len(&self) -> usize {
         unimplemented!()
     }
     /// Returns the byte representation of the [`BigUint`] in little-endian byte order.
+    #[flux::trusted]
+    #[flux::sig(fn (&BigUint) -> TestVec)]
     fn to_bytes_le(&self) -> TestVec {
         unimplemented!()
     }
@@ -115,6 +122,8 @@ pub trait TestTryInto: Sized {
 }
 
 impl TestTryInto for TestVec {
+    #[flux::trusted]
+    #[flux::sig(fn ({TestVec[@n] | n == 64}) -> TestResult)]
     fn try_into(self) -> TestResult {
         unimplemented!()
     }
@@ -135,35 +144,6 @@ impl TestResult {
             TestResult::Err(_) => panic!("called `TestResult::unwrap()` on an `Err` value"),
         }
     }
-}
-
-#[extern_spec]
-#[flux::refined_by(len: int)]
-struct TestVec;
-
-#[extern_spec]
-impl TestVec {
-    #[flux::sig(fn (&TestVec[@n]) -> usize[n])]
-    fn len(s: &TestVec) -> usize;
-}
-
-#[extern_spec]
-impl TestTryInto for TestVec {
-    #[flux::sig(fn ({TestVec[@n] | n <= 64}) -> TestResult)]
-    fn try_into(s: TestVec) -> TestResult;
-}
-
-#[extern_spec]
-#[flux::refined_by(len: int)]
-struct BigUint;
-
-#[extern_spec]
-impl BigUint {
-    #[flux::sig(fn (&BigUint[@n]) -> usize[n])]
-    fn len(s: &BigUint) -> usize;
-
-    #[flux::sig(fn (&BigUint) -> TestVec)]
-    fn to_bytes_le(s: &BigUint) -> TestVec;
 }
 
 pub fn bn_to_field<F: FromUniformBytes<64>>(bn: &BigUint) -> F {
